@@ -1,0 +1,98 @@
+<div class="example-container">
+<h2>Помош и дополнителни инфромации</h2>    <br>
+<br>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h3>PAM секвенца</h3>
+            </mat-panel-title>
+            <mat-panel-description>
+
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p> РАМ секвенцата претставува кратка секвенца, од 2-6 нуклеотиди, и e всушност местото каде што ензимот треба
+            да го пресече ДНА хеликсот. Точната секвенца зависи од тоа кој протеин ќе го користиме. Така, на пример
+            секвенцата за SpCas9 (Streptococcus Pyogenes Cas9) изгледа:
+            5’-NGG-3’, каде N е било која нуклеотидна база.
+        </p>
+        <mat-table [dataSource]="dataSource">
+            
+                <ng-container matColumnDef="nuclease">
+                    <mat-header-cell *matHeaderCellDef>Нуклеаза</mat-header-cell>
+                    <mat-cell class="description-cell"
+                              *matCellDef="let element">{{element.nuclease}}</mat-cell>
+            
+                </ng-container>
+            
+                <ng-container matColumnDef="organism">
+                    <mat-header-cell *matHeaderCellDef>Организам</mat-header-cell>
+                    <mat-cell class="duration-cell"
+                              *matCellDef="let element">{{element.organism}}</mat-cell>
+                </ng-container>
+            
+                <ng-container matColumnDef="pam">
+                        <mat-header-cell *matHeaderCellDef>PAM 5'->3'</mat-header-cell>
+                        <mat-cell class="duration-cell"
+                                  *matCellDef="let element">{{element.pam}}</mat-cell>
+                    </ng-container>
+                
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            
+                <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            
+            </mat-table>
+    </mat-expansion-panel>
+
+
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h3>Водечка RNA</h3>
+            </mat-panel-title>
+            <mat-panel-description>
+
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>Водечката РНА е всушност кратка РНА секвенца која овозможува пронаоѓање на таргетот во ДНА секвенцата која сакаме да ја модифицираме, како и можност за спојување на Cas9 нуклеазата со самиот хеликс. 
+                Таа е составена од самата таргет секвенца која сакаме да ја модифицираме (~20 нуклеотиди) и исто така т.н. “костур“ (scaffold) РНА секвенца која служи за Cas9 спојувањето.
+                Scaffold секвенцата е предефинирана, и зависи од типот на Cas9 кој ќе биде користен, во нашиот систем имаме предефинирана секвенца за Streptococcus pyogenes Cas9.
+            </p>
+            <img src="../../assets/img/grna.png"/>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h3>Број и големина на таргет секвенци</h3>
+                </mat-panel-title>
+                <mat-panel-description>
+    
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p> При дизајн на CRISPR таргет, во последнаите 3 колони ќе забележите информации за број на таргет места, зависно од големината на секвенцата (8mer, 12mer 20mer).
+                Во овие случаеви, помал број значи попрецизна секвенца, бидејќи е поверојатно да се избегне Off-target модифицирање.
+                Податоците обележани со зелена боја означуваат совршен погодок, имаат по еден погодок од 12mer+PAM и еден од 20mer+PAM.
+                </p>
+
+                <img src="../../assets/img/gRNAalign.png"/>
+        </mat-expansion-panel>
+
+        
+    <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h3>Off-target позиција</h3>
+                </mat-panel-title>
+                <mat-panel-description>
+    
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p> Off-target е позиција каде што не е пожелно, но е возможно да се случи CRISPR модификација. 
+                Со ова може да се случи менување на функцијата на гени каде што не е пожелно, може да се случат и други ненамерни мутации, бришења или додавања на генетски материјал.
+                За да се избегне ова, треба да се одбере високо специфична секвенца за обработка.
+            </p>
+
+                <img src="../../assets/img/оффтаргет.jpg"/>
+        </mat-expansion-panel>
+</div>

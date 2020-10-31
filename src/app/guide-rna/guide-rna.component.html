@@ -1,0 +1,26 @@
+<div class="example-container">
+<h2>Дизајн на водечка RNA</h2>    <br>
+<br>
+	<mat-label>Таргет секвенца + PAM *</mat-label>
+	<mat-form-field appearance="outline">
+		<textarea required [(ngModel)]="userseq" matInput rows="2"></textarea>
+	</mat-form-field>
+
+	
+	<mat-label>Костур (scaffold)</mat-label>
+	<mat-form-field appearance="outline">
+		<textarea [(ngModel)]="scaffold" matInput rows="2"></textarea>
+		<mat-hint>Предефинирана е секвенцата за Streptococcus pyogenes Cas9</mat-hint>
+	</mat-form-field>
+
+	<br><br>
+	<div>
+		<button mat-stroked-button color="primary" (click)="set_query()">Пресметај sgRNA</button>
+		<br><Br>
+	</div>
+
+	<mat-label>Резултат:</mat-label>
+	<mat-form-field appearance="outline">
+			<textarea disabled [(ngModel)]="sgrnaRes" matInput rows="3"></textarea>
+	</mat-form-field>
+</div>

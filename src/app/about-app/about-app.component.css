@@ -1,0 +1,33 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-self: center;
+    align-items: center;
+    padding: 7%;
+  }
+  
+  .example-container > * {
+    width: 70%;
+  }
+  
+  .mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+
+button {
+    width: 20% !important;
+    margin-right: 10%
+   }
+
+
+   mat-radio-group{
+     padding-top: 2%;
+   }
+   
+   .mat-toolbar {
+       font-size: x-small!important
+   }
+td {
+   border-left: 1px black solid
+   }

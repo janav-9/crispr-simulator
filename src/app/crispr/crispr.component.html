@@ -1,0 +1,95 @@
+<div class="example-container">
+<h2>Дизајн на CRISPR-Cas9 таргет</h2>
+<br>
+<br>
+    <mat-label>Тип на внес на секвенца за обработка *</mat-label>
+    <mat-radio-group [(ngModel)]="sekvencaTip" (ngModelChange)="setValue()">
+        <mat-radio-button value="vseq">Секвенца текст</mat-radio-button>
+        <mat-radio-button value="vfasta">Прикачи FASTA</mat-radio-button>
+    </mat-radio-group>
+
+    <br>
+    <br>
+
+        <mat-label  *ngIf="tipSek == 'vseq'">Секвенца за обработка *</mat-label><br><Br>
+        <mat-form-field   *ngIf="tipSek == 'vseq'" appearance="outline">
+            <textarea [(ngModel)]="userseq" matInput rows="5" maxlength="4000"></textarea>
+            <mat-hint>Внесете секвенца како текст max. 4000 карактери</mat-hint>
+        </mat-form-field>
+        <div *ngIf="tipSek == 'vseq'">
+                <br><Br>
+        </div>
+
+    <div *ngIf="tipSek=='vfasta'">    
+        <mat-label>Датотека во FASTA формат *</mat-label>
+        <input style="visibility: hidden;" type="file" id="input-file-id" (change)="handleFileInput($event.target.files)" />
+        <button mat-stroked-button color="primary"><label for="input-file-id">Одберете датотека</label></button>
+    <br>
+        <mat-hint>{{filename}}</mat-hint>
+        <br>
+        <br><br><Br>
+    </div>
+
+    <mat-label>Оберете вид</mat-label>
+    <mat-form-field>
+        <mat-select [(value)]="species">
+            <mat-option value="hg19">Човек (Homo Sapiens GRCh37/hg19)</mat-option>
+            <mat-option value="mm9">Глушец (Mus musculus NCBI37/mm9)</mat-option>
+            <mat-option value="felCat5">Мачка (Felis catus ICGSC Felis_catus 6.2/felCat5)</mat-option>
+            <mat-option value="canFam3">Куче (Canis familiaris Broad CanFam3.1/canFam3)</mat-option>
+            <mat-option value="galGal4">Кокошка (Gallus gallus ICGSC Gallus_gallus-4.0/galGal4)</mat-option>
+            <mat-option value="panTro4a">Шимпанзо (Pan troglodytes CSAC 2.1.4/panTro4)</mat-option>
+            <mat-option value="turTru2">Делфин (Tursiops truncatus Baylor Ttru_1.4/turTru2 </mat-option>
+        </mat-select>
+        <mat-hint>Одберете вид на организам за специфично пребарување</mat-hint>
+    </mat-form-field>
+    <br>
+    <br><br><Br>
+
+    <mat-label>РАМ секвенца *</mat-label>
+    <mat-form-field appearance="outline">
+        <input matInput placeholder="PAM sequence" [(ngModel)]="pamseq">
+    </mat-form-field>
+
+    <br>
+    <br>
+    <mat-label>Насока *</mat-label>
+    <mat-radio-group [(ngModel)]="direction" aria-label="Насока"  (ngModelChange)="setValueStrand()">
+        <mat-radio-button value="+">5'->3'</mat-radio-button>
+        <mat-radio-button value="-">3'->5'</mat-radio-button>
+    </mat-radio-group>
+
+    <br><Br><br><Br>
+    <div>    
+        <button mat-stroked-button color="primary" (click)="getCRISPR()">Прикажи резултати</button>
+        <button mat-stroked-button color="primary" (click)="getCRISPR('download')">Превземи резултати</button>
+        <br><Br><br><Br></div>
+
+    <div *ngIf="resultArray.length > 0">
+        <mat-table [dataSource]="resultArray" class="mat-elevation-z8">
+            <ng-container matColumnDef="position">
+                <mat-header-cell *matHeaderCellDef> Позиција </mat-header-cell>
+                <mat-cell *matCellDef="let element"  [ngStyle]="{'background-color': (element.hit_12mer==1 && element.hit_20mer==1) ? '#73c7af' : '#ffffff'}" > {{element.start}} - {{ element.end}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="sequence">
+                <mat-header-cell *matHeaderCellDef> Секвенца </mat-header-cell>
+                <mat-cell *matCellDef="let element"[ngStyle]="{'background-color': (element.hit_12mer==1 && element.hit_20mer==1) ? '#73c7af' : '#ffffff'}"> {{element.sequence}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="8mer">
+                    <mat-header-cell *matHeaderCellDef> 8mer + PAM </mat-header-cell>
+                    <mat-cell *matCellDef="let element"[ngStyle]="{'background-color': (element.hit_12mer==1 && element.hit_20mer==1) ? '#73c7af' : '#ffffff'}"> {{element.hit_8mer}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="12mer">
+                    <mat-header-cell *matHeaderCellDef> 12mer + PAM </mat-header-cell>
+                    <mat-cell *matCellDef="let element"[ngStyle]="{'background-color': (element.hit_12mer==1 && element.hit_20mer==1) ? '#73c7af' : '#ffffff'}"> {{element.hit_12mer}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="20mer">
+                    <mat-header-cell *matHeaderCellDef> 8mer + PAM </mat-header-cell>
+                    <mat-cell *matCellDef="let element"[ngStyle]="{'background-color': (element.hit_12mer==1 && element.hit_20mer==1) ? '#73c7af' : '#ffffff'}"> {{element.hit_20mer}} </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </div>
+    <label *ngIf="showEmpty">Нема податоци</label>
+</div>
